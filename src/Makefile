@@ -3,7 +3,7 @@
 ARCH ?= amd64
 
 ARCHS32 := i386
-ARCHS64 := amd64
+ARCHS64 := amd64 aarch64
 ARCHS := $(ARCHS32) $(ARCHS64)
 
 CFLAGS += -pipe -Wall -Wextra -fPIC -fno-ident -fno-stack-protector -U _FORTIFY_SOURCE
