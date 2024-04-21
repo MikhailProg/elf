@@ -36,16 +36,7 @@ ret z_##name(t1 a1, t2 a2, t3 a3) \
 	return (ret)SYSCALL(name, a1, a2, a3); \
 }
 
-#ifdef SYS_open
-DEF_SYSCALL2(int, open, const char *, filename, int, flags)
-#else
 DEF_SYSCALL3(int, openat, int, dirfd, const char *, filename, int, flags)
-int z_open(const char * filename, int flags)
-{
-	return z_openat(AT_FDCWD, filename, flags);
-}
-#endif
-
 DEF_SYSCALL3(ssize_t, read, int, fd, void *, buf, size_t, count)
 DEF_SYSCALL3(ssize_t, write, int, fd, const void *, buf, size_t, count)
 DEF_SYSCALL1(int, close, int, fd)
@@ -54,14 +45,20 @@ DEF_SYSCALL1(int, exit, int, status)
 DEF_SYSCALL2(int, munmap, void *, addr, size_t, length)
 DEF_SYSCALL3(int, mprotect, void *, addr, size_t, length, int, prot)
 
+int z_open(const char * filename, int flags)
+{
+	return z_openat(AT_FDCWD, filename, flags);
+}
+
 void *
 z_mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset)
 {
-#if defined(__i386__)
-	/* i386 has old_mmap and mmap2, old_map is a legacy single arg
-	 * function, use mmap2 but it needs offset in page units. */
-	offset = (unsigned long long)offset >> 12;
-	return (void *)SYSCALL(mmap2, addr, length, prot, flags, fd, offset);
+	/* i386 has map (old_mmap) and mmap2, old_map is a legacy single arg
+	 * function, use mmap2 but it needs offset in page units.
+	 * In same time mmap2 does not exist on x86-64.
+	 */
+#ifdef SYS_MMAP2
+	return (void *)SYSCALL(mmap2, addr, length, prot, flags, fd, offset >> 12);
 #else
 	return (void *)SYSCALL(mmap, addr, length, prot, flags, fd, offset);
 #endif

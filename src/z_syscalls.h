@@ -12,6 +12,7 @@
 
 int	z_exit(int status);
 int	z_open(const char *pathname, int flags);
+int	z_openat(int dirfd, const char *pathname, int flags);
 int	z_close(int fd);
 int	z_lseek(int fd, off_t offset, int whence);
 ssize_t	z_read(int fd, void *buf, size_t count);
