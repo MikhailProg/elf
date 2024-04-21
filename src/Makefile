@@ -18,6 +18,7 @@ endif
 ifeq "$(filter $(ARCH),$(ARCHS32))" "$(ARCH)"
   CFLAGS += -m32 -DELFCLASS=ELFCLASS32
   ASFLAGS += -m32
+  LDFLAGS += -m32
 else
   CFLAGS += -DELFCLASS=ELFCLASS64
 endif
