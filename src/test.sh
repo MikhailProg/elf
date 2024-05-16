@@ -10,7 +10,7 @@ trap 'rm -rf $TEST_DIR' EXIT
 
 PATH=.:$PATH
 
-command -v loader > /dev/null || { echo 2> "error: build the project"; exit 1; }
+command -v loader > /dev/null || { echo >&2 "error: build the project"; exit 1; }
 
 mkdir -p $TEST_DIR
 
