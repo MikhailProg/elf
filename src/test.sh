@@ -6,10 +6,9 @@ CFLAGS="-Wall -Wextra -s"
 
 set -eu
 
-#trap 'rm -rf $TEST_DIR' EXIT
+trap 'rm -rf $TEST_DIR' EXIT
 
 PATH=.:$PATH
-
 
 command -v loader > /dev/null || { echo 2> "error: build the project"; exit 1; }
 
@@ -34,5 +33,4 @@ for opt in "default@" "static@ -static" "pie@ -fPIE" "static_pie@ -static-pie -f
     cc $CFLAGS $flags "$TEST_SRC" -o "$out"
     loader "$out" >/dev/null 2>&1 && echo PASS || echo FAIL
 done
-
 
