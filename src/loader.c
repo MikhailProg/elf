@@ -12,14 +12,9 @@
 			 (((x) & PF_X) ? PROT_EXEC : 0))
 #define LOAD_ERR	((unsigned long)-1)
 
-/* External fini function that the caller can provide us. */
-static void (*x_fini)(void);
-
 static void z_fini(void)
 {
-	z_printf("Fini at work: x_fini %p\n", x_fini);
-	if (x_fini != NULL)
-		x_fini();
+	z_printf("Fini at work\n");
 }
 
 static int check_ehdr(Elf_Ehdr *ehdr)
@@ -108,7 +103,8 @@ void z_entry(unsigned long *sp, void (*fini)(void))
 	ssize_t sz;
 	int argc, fd, i;
 
-	x_fini = fini;
+	(void)fini;
+
 	argc = (int)*(sp);
 	argv = (char **)(sp + 1);
 	env = p = (char **)&argv[argc + 1];
