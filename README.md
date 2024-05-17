@@ -36,17 +36,16 @@ pie            : PASS
 static pie     : PASS
 ```
 
-Run test if build for i386:
+Run tests if the loader is built for i386:
 ```
 $ M32= ./test.sh
+...
 ```
 
 Load ls:
 ```
 $ ./loader /bin/ls
 ```
-
-
 
 Load galculator:
 ```
