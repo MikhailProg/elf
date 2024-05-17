@@ -27,10 +27,21 @@ $ make SMALL=1
 
 ## Load binaries
 
+Run basic hello world test:
+```
+$ ./test.sh 
+default        : PASS
+static         : PASS
+pie            : PASS
+static pie     : PASS
+```
+
 Load ls:
 ```
 $ ./loader /bin/ls
 ```
+
+
 
 Load galculator:
 ```
