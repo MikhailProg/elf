@@ -2,7 +2,7 @@
 
 TEST_DIR=/tmp/loadertests
 TEST_SRC=${TEST_DIR}/test.c
-CFLAGS="-Wall -Wextra -s"
+CFLAGS="-Wall -Wextra -s ${M32+-m32}"
 
 set -eu
 
