@@ -24,7 +24,7 @@ int main()
 }
 EOF
 
-for opt in "default@" "static@ -static" "pie@ -fPIE" "static_pie@ -static-pie -fPIE"; do
+for opt in "default@" "static@ -static" "pie@ -fPIE" "static pie@ -static-pie -fPIE"; do
     label=${opt%@*}
     flags=${opt#*@}
     out=$TEST_DIR/$label
