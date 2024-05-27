@@ -1,6 +1,6 @@
 #include "nolibc.h"
 #include "mprotect.h"
-#include "z_asm.h"
+#include "trampo.h"
 #include "z_utils.h"
 #include "z_elf.h"
 
