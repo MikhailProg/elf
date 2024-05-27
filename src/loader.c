@@ -159,7 +159,11 @@ void z_entry(unsigned long *sp, void (*fini)(void))
 		/* Looks like the ELF is static -- leave the loop. */
 		if (elf_interp == NULL)
 			break;
+
+		close(fd);
 	}
+
+	close(fd);
 
 	/* Reassign some vectors that are important for
 	 * the dynamic linker and for lib C. */
