@@ -140,8 +140,11 @@ void z_entry(unsigned long *sp, void (*fini)(void))
 		/* Set the entry point, if the file is dynamic than add bias. */
 		entry[i] = ehdr->e_entry + (ehdr->e_type == ET_DYN ? base[i] : 0);
 		/* The second round, we've loaded ELF interp. */
-		if (file == elf_interp)
+		if (file == elf_interp) {
+			z_close(fd);
 			break;
+		}
+
 		for (iter = phdr; iter < &phdr[ehdr->e_phnum]; iter++) {
 			if (iter->p_type != PT_INTERP)
 				continue;
@@ -155,6 +158,8 @@ void z_entry(unsigned long *sp, void (*fini)(void))
 				z_errx(1, "bogus interp path");
 			file = elf_interp;
 		}
+
+		z_close(fd);
 		/* Looks like the ELF is static -- leave the loop. */
 		if (elf_interp == NULL)
 			break;
